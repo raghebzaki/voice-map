@@ -51,10 +51,26 @@ class _MapScreenState extends State<MapScreen> {
     await flutterTts.speak(text);
   }
 
+  void _getPosition() async {
+
+    bool isLocationServiceEnabled  = await Geolocator().isLocationServiceEnabled();
+    if (!isLocationServiceEnabled) {
+      return flutterTts.speak('افتح خدمة تحديد الموقع');
+    }
+    return getCurrentLocation();
+  }
+  // Position livelocation;
+  // StreamSubscription<Position> positionStream =
+  // Geolocator().getPositionStream(LocationOptions).
+  // listen((Position position) {
+  //
+  // });
+
 
   Position position;
   void getCurrentLocation() async {
     try {
+
       Position currentposition = await Geolocator()
           .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
       setState(() {
@@ -70,15 +86,14 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    getCurrentLocation();
+    _getPosition();
     _speech = stt.SpeechToText();
     flutterTts.speak('مرحبا اين تريد ان تذهب');
     _listen();
     }
 
-  Set<Marker> Markers = {};
+  Set<Marker> markers = {};
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,13 +114,13 @@ class _MapScreenState extends State<MapScreen> {
             onMapCreated: (GoogleMapController controller) {
               setState(() {
                 googleMapController = controller;
-                Markers.add(Marker(
+                markers.add(Marker(
                   markerId: MarkerId(''),
                   position: LatLng(position.latitude, position.longitude),
                 ));
               });
             },
-            markers: Markers,
+            markers: markers,
           ),
           Stack(
             alignment: Alignment.bottomRight,
