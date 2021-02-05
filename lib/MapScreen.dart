@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:location/location.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
@@ -53,28 +53,23 @@ class _MapScreenState extends State<MapScreen> {
 
   void _getPosition() async {
 
-    bool isLocationServiceEnabled  = await Geolocator().isLocationServiceEnabled();
+    bool isLocationServiceEnabled  = await location.serviceEnabled();
     if (!isLocationServiceEnabled) {
       return flutterTts.speak('افتح خدمة تحديد الموقع');
     }
     return getCurrentLocation();
   }
-  // Position livelocation;
-  // StreamSubscription<Position> positionStream =
-  // Geolocator().getPositionStream(LocationOptions).
-  // listen((Position position) {
-  //
-  // });
 
+  LocationData _locationData;
+  Location location = new Location();
 
-  Position position;
   void getCurrentLocation() async {
-    try {
 
-      Position currentposition = await Geolocator()
-          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      setState(() {
-        position= currentposition;
+    try {
+      location.enableBackgroundMode();
+      location.onLocationChanged.listen((LocationData currentLocation) async {
+        _locationData = await location.getLocation();
+        print(_locationData.latitude.toString() + " " + _locationData.longitude.toString());
       });
 
     } catch (e) {
@@ -106,7 +101,7 @@ class _MapScreenState extends State<MapScreen> {
           GoogleMap(
             mapType: MapType.normal,
             initialCameraPosition: CameraPosition(
-              target: LatLng(position.latitude, position.longitude),
+              target: LatLng(30.0759441, 31.2385913),
               zoom: 14.4746,
             ),
             myLocationEnabled: true,
@@ -116,7 +111,7 @@ class _MapScreenState extends State<MapScreen> {
                 googleMapController = controller;
                 markers.add(Marker(
                   markerId: MarkerId(''),
-                  position: LatLng(position.latitude, position.longitude),
+                  position: LatLng(_locationData.latitude, _locationData.longitude),
                 ));
               });
             },
