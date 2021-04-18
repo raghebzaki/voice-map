@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/MapScreen.dart';
+import 'file:///C:/Users/raghebzaki/AndroidStudioProjects/flutter_map/lib/screens/MapScreen.dart';
+import 'package:flutter_map/screens/PlacesScreen.dart';
+import 'package:flutter_map/screens/AddNewPlaceScreen.dart';
+
+import 'widget/theme.dart';
 
 
 void main() {
@@ -11,10 +15,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'chat',
-      initialRoute: MapScreen.id,
+      theme: myThemeData,
+      initialRoute: 'MapScreen',
       routes: {
-        MapScreen.id:(context) => MapScreen(),
+        'MapScreen':(context) => MapScreen(),
+        'PlacesScreen':(context) => PlacesScreen(),
+        'AddNewPlaceScreen':(context) => AddNewPlaceScreen(),
       },
     );
   }
