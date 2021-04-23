@@ -3,6 +3,7 @@ import 'file:///C:/Users/raghebzaki/AndroidStudioProjects/flutter_map/lib/screen
 import 'package:flutter_map/screens/PlacesScreen.dart';
 import 'package:flutter_map/screens/AddNewPlaceScreen.dart';
 
+import 'screens/ChooseOnMapScreen.dart';
 import 'widget/theme.dart';
 
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         'MapScreen':(context) => MapScreen(),
         'PlacesScreen':(context) => PlacesScreen(),
         'AddNewPlaceScreen':(context) => AddNewPlaceScreen(),
+        'ChooseOnMapScreen':(context) => ChooseOnMap(),
       },
     );
   }

@@ -32,7 +32,11 @@ class _MapScreenState extends State<MapScreen> {
             setState(() {
               inputLang.text = val.recognizedWords;
               if(inputLang.text!=null)
-                {speak(inputLang.text);}
+                {
+                  Future.delayed(Duration( seconds: 2),(){
+                    speak(inputLang.text);
+                  });
+                }
             }),
       );
     }else {
@@ -73,7 +77,7 @@ class _MapScreenState extends State<MapScreen> {
     super.initState();
     flutterTts.speak('مرحبا اين تريد ان تذهب');
     _getPosition();
-    Future.delayed(Duration( seconds: 2),(){
+    Future.delayed(Duration( seconds: 3),(){
       _speech = stt.SpeechToText();
       _listen();
     });
@@ -93,7 +97,7 @@ class _MapScreenState extends State<MapScreen> {
           GoogleMap(
             mapType: MapType.normal,
             initialCameraPosition: CameraPosition(
-              target: LatLng(35.0759441, 31.2385913),
+              target: LatLng(30.063549, 31.249667),
               zoom: 15,
             ),
             myLocationEnabled: true,
