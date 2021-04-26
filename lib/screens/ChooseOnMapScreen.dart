@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/screens/AddNewPlaceScreen.dart';
 import 'package:flutter_map/widget/menu.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ChooseOnMap extends StatefulWidget {
@@ -31,8 +29,6 @@ class _ChooseOnMapState extends State<ChooseOnMap> {
           GoogleMap(
             markers: markers,
             onTap: (pos) {
-
-              print(pos);
               Marker marker = Marker(markerId: MarkerId('1'),position: pos ,);
               setState(() {
                 position = pos;
@@ -42,7 +38,7 @@ class _ChooseOnMapState extends State<ChooseOnMap> {
             mapType: MapType.normal,
             initialCameraPosition: CameraPosition(
               target: LatLng(30.063549, 31.249667),
-              zoom: 15,
+              zoom: 8,
             ),
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
@@ -50,15 +46,18 @@ class _ChooseOnMapState extends State<ChooseOnMap> {
           Container(
             width: MediaQuery.of(context).size.width,
             child: RaisedButton(
-                child: Text('save'),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context)=> AddNewPlaceScreen(position: position,),));
-                }
-                ),
+              child: Text('save'),
+              onPressed: () {
+                _sendDataBack(context);
+                },
+            ),
           ),
         ],
       ),
     );
+  }
+  void _sendDataBack(BuildContext context) {
+    var sendBack = position;
+    Navigator.pop(context, sendBack);
   }
 }

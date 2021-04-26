@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/Database/MyDatabase.dart';
 import 'package:flutter_map/widget/menu.dart';
 
 class PlacesScreen extends StatefulWidget {
@@ -7,6 +8,8 @@ class PlacesScreen extends StatefulWidget {
 }
 
 class _PlacesScreenState extends State<PlacesScreen> {
+  MyDatabase myDatabase =MyDatabase();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,9 +17,19 @@ class _PlacesScreenState extends State<PlacesScreen> {
       appBar: AppBar(
         title: Text('Saved Places'),
       ),
-      body: Center(
-          child: Text('place screen')
-      ),
+      // body: Center(
+      //     child: FutureBuilder(
+      //       future: myDatabase.getall(),
+      //       builder: (context, AsyncSnapshot<List<PlaceList>> snapshot) {
+      //         Switch(snapshot.connectionState, ){
+      //           case ConnectionState.none:
+      //             return Center(child: Text('error no connection made'),);
+      //             break;
+      //             case ConnectionState.waiting;
+      //         }
+      //       },
+      //     )
+      // ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: (){
