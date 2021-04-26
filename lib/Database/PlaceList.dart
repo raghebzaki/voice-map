@@ -1,20 +1,13 @@
 
 class PlaceList {
 
-   int id ;
-   String placeName;
-   double userlat;
-   double userlng;
+   final int id ;
+   final String placeName;
+   final double userlat;
+   final double userlng;
 
 
-  PlaceList(this.id, this.placeName, this.userlat, this.userlng);
-
-  PlaceList.frommap(Map<String,dynamic> map){
-    this.id = map['id'];
-    this.placeName = map['name'];
-    this.userlat = map['lat'];
-    this.userlng = map['lng'];
-  }
+  PlaceList({this.id, this.placeName, this.userlat, this.userlng});
 
   String table(){
     return 'places';

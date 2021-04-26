@@ -48,10 +48,13 @@ class MyDatabase{
     final Database db = await database();
     final List<Map<String, dynamic>> maps = await db.query('places');
 
-    List<PlaceList> placeList = [];
-    for(var item in maps){
-      placeList.add(PlaceList.frommap(item));
-    }
-    return placeList;
+    return List.generate(maps.length, (i) {
+      return PlaceList(
+        id: maps[i]['id'],
+        placeName: maps[i]['name'],
+        userlat: maps[i]['lat'],
+        userlng: maps[i]['lng'],
+      );
+    });
   }
 }
