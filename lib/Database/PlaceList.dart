@@ -1,10 +1,10 @@
 
 class PlaceList {
 
-   final int id ;
-   final String placeName;
-   final double userlat;
-   final double userlng;
+    int id ;
+    String placeName;
+    double userlat;
+    double userlng;
 
 
   PlaceList({this.id, this.placeName, this.userlat, this.userlng});
@@ -26,11 +26,16 @@ class PlaceList {
     };
   }
 
-
   String getname() {
     return this.placeName;
   }
 
+   PlaceList.fromMap(Map<String, dynamic> data){
+     id = data['id'];
+     placeName = data['name'];
+     userlat = data['lat'];
+     userlng = data['lng'];
+   }
 
 
 }

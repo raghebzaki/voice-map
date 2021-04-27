@@ -9,7 +9,7 @@ class MyDatabase{
       join(await getDatabasesPath(), 'places_db.db'),
       onCreate: (db, version) {
         return db.execute(
-          "CREATE TABLE places(id INTEGER PRIMARY KEY, name TEXT, Lat DOUBLE, Lng DOUBLE)",
+          "CREATE TABLE places(id INTEGER PRIMARY KEY, name TEXT, Lat REAL, Lng REAL)",
         );
       },
       version: 1,
@@ -35,26 +35,17 @@ class MyDatabase{
     );
   }
 
-  Future<void> delete(PlaceList placeList) async {
+  Future<void> delete(String name) async {
     final Database db = await database();
     await db.delete(
-      placeList.table(),
-        where: "name = ?",
-        whereArgs: [placeList.getname()],
+      'places',
+      where: "name = ?",
+      whereArgs: [name],
     );
   }
 
-  Future<List<PlaceList>> getAll() async {
+  Future<List> getAll() async {
     final Database db = await database();
-    final List<Map<String, dynamic>> maps = await db.query('places');
-
-    return List.generate(maps.length, (i) {
-      return PlaceList(
-        id: maps[i]['id'],
-        placeName: maps[i]['name'],
-        userlat: maps[i]['lat'],
-        userlng: maps[i]['lng'],
-      );
-    });
+    return db.query('places');
   }
 }

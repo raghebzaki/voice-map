@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/Database/MyDatabase.dart';
+import 'package:flutter_map/Database/PlaceList.dart';
 import 'package:flutter_map/screens/ChooseOnMapScreen.dart';
 import 'package:flutter_map/widget/menu.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,9 +12,14 @@ class AddNewPlaceScreen extends StatefulWidget {
 }
 
 class _AddNewPlaceScreenState extends State<AddNewPlaceScreen> {
+  String placeName;
+  double userlat,userlng;
   LatLng location ;
+  var nameController = TextEditingController();
   var latController = TextEditingController();
   var lngController = TextEditingController();
+
+  MyDatabase myDatabase =MyDatabase();
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +38,12 @@ class _AddNewPlaceScreenState extends State<AddNewPlaceScreen> {
                 margin: EdgeInsets.all(10.0),
                 //height: height*.2,
                 child: TextField(
+                  onChanged: (value){
+                    setState(() {
+                      placeName = value;
+                    });
+                  },
+                  controller: nameController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50),
@@ -48,6 +61,8 @@ class _AddNewPlaceScreenState extends State<AddNewPlaceScreen> {
                 margin: EdgeInsets.all(10.0),
                 //height: height*.2,
                 child: TextField(
+
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50),
@@ -65,6 +80,7 @@ class _AddNewPlaceScreenState extends State<AddNewPlaceScreen> {
                 margin: EdgeInsets.all(10.0),
                 //height: height*.2,
                 child: TextField(
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50),
@@ -109,11 +125,18 @@ class _AddNewPlaceScreenState extends State<AddNewPlaceScreen> {
               child: RaisedButton(
                 child: Text('save'),
                 onPressed: () {
+                  setState(() {
+                    userlat = double.parse(latController.text);
+                    userlng = double.parse(lngController.text);
+                    print('latlng($userlat , $userlng)');
+                  });
+                  var placeList = PlaceList(placeName: placeName,userlat: userlat,userlng: userlng);
+                  myDatabase.insert(placeList);
                   Navigator.of(context).pushNamed('PlacesScreen');
                 },
               ),
             ),
-      ]
+        ]
       ),
     );
   }
