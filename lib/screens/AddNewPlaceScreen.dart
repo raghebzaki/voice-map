@@ -15,11 +15,18 @@ class _AddNewPlaceScreenState extends State<AddNewPlaceScreen> {
   String placeName;
   double userlat,userlng;
   LatLng location ;
+
   var nameController = TextEditingController();
   var latController = TextEditingController();
   var lngController = TextEditingController();
 
   MyDatabase myDatabase =MyDatabase();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +68,11 @@ class _AddNewPlaceScreenState extends State<AddNewPlaceScreen> {
                 margin: EdgeInsets.all(10.0),
                 //height: height*.2,
                 child: TextField(
-
+                  onChanged: (value){
+                    setState(() {
+                      userlat = double.parse(value);
+                    });
+                  },
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -80,6 +91,11 @@ class _AddNewPlaceScreenState extends State<AddNewPlaceScreen> {
                 margin: EdgeInsets.all(10.0),
                 //height: height*.2,
                 child: TextField(
+                  onChanged: (value){
+                    setState(() {
+                      userlng = double.parse(value);
+                    });
+                  },
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -125,11 +141,6 @@ class _AddNewPlaceScreenState extends State<AddNewPlaceScreen> {
               child: RaisedButton(
                 child: Text('save'),
                 onPressed: () {
-                  setState(() {
-                    userlat = double.parse(latController.text);
-                    userlng = double.parse(lngController.text);
-                    print('latlng($userlat , $userlng)');
-                  });
                   var placeList = PlaceList(placeName: placeName,userlat: userlat,userlng: userlng);
                   myDatabase.insert(placeList);
                   Navigator.of(context).pushNamed('PlacesScreen');
