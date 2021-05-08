@@ -48,4 +48,9 @@ class MyDatabase{
     final Database db = await database();
     return db.query('places');
   }
+
+  Future<List> getRow(String name) async {
+    final Database db = await database();
+    return db.query('places',where: 'name = "$name"');
+  }
 }

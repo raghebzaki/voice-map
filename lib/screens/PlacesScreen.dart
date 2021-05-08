@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/Database/MyDatabase.dart';
 import 'package:flutter_map/Database/PlaceList.dart';
-import 'package:flutter_map/services/Polyline.dart';
 import 'package:flutter_map/widget/menu.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class PlacesScreen extends StatefulWidget {
   @override
@@ -11,8 +9,19 @@ class PlacesScreen extends StatefulWidget {
 }
 
 class _PlacesScreenState extends State<PlacesScreen> {
-  MyDatabase myDatabase =MyDatabase();
 
+  MyDatabase mydatabase =MyDatabase();
+  var places = [];
+
+  @override
+  void initState() {
+    super.initState();
+    MyDatabase().getAll().then((value) {
+      setState(() {
+        places = value;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,39 +30,34 @@ class _PlacesScreenState extends State<PlacesScreen> {
         title: Text('Saved Places'),
       ),
       body: Center(
-          child: FutureBuilder(
-            future: myDatabase.getAll(),
-            builder: (context, AsyncSnapshot snapshot){
-
-              if(!snapshot.hasData){
-                return Center(child: CircularProgressIndicator(),);
-              }else{
-                return ListView.builder(
-                    itemCount: snapshot.data.length,
-                    itemBuilder:  (context, i){
-                      PlaceList placeList = PlaceList.fromMap(snapshot.data[i]);
-                      return Card(
-                        child: ListTile(
-                          title: Text('${placeList.placeName} '),
-                          subtitle: Text('${placeList.userlat} , ${placeList.userlng}'),
-                          trailing: IconButton(icon: Icon(Icons.delete,color: Colors.red,),
-                            onPressed: (){
-                            setState(() {
-                              myDatabase.delete(placeList.placeName);
-                            });
-                            },
+        child:  ListView.builder(
+                  itemCount: places.length,
+                  itemBuilder: (context, i) {
+                    PlaceList placeList = PlaceList.fromMap(places[i]);
+                    return Card(
+                      child: ListTile(
+                        title: Text('${placeList.placeName}'),
+                        subtitle:
+                            Text('${placeList.userLat} , ${placeList.userLng}'),
+                        trailing: IconButton(
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.red,
                           ),
+                          onPressed: () {
+                            setState(() {
+                              mydatabase.delete(placeList.placeName);
+                            });
+                          },
                         ),
-                      );
-                    }
-                );
-              }
-            },
-          ),
+                      ),
+                    );
+                  }),
       ),
+
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: (){
+        onPressed: () {
           Navigator.of(context).pushNamed('AddNewPlaceScreen');
         },
       ),

@@ -3,14 +3,12 @@ import 'package:flutter_map/Database/MyDatabase.dart';
 import 'file:///C:/Users/raghebzaki/AndroidStudioProjects/flutter_map/lib/screens/MapScreen.dart';
 import 'package:flutter_map/screens/PlacesScreen.dart';
 import 'package:flutter_map/screens/AddNewPlaceScreen.dart';
-
 import 'screens/ChooseOnMapScreen.dart';
 import 'widget/theme.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  MyDatabase myDatabase =MyDatabase();
+  MyDatabase myDatabase = MyDatabase();
   await myDatabase.database();
   runApp(MyApp());
 }
@@ -23,12 +21,11 @@ class MyApp extends StatelessWidget {
       theme: myThemeData,
       initialRoute: 'MapScreen',
       routes: {
-        'MapScreen':(context) => MapScreen(),
-        'PlacesScreen':(context) => PlacesScreen(),
-        'AddNewPlaceScreen':(context) => AddNewPlaceScreen(),
-        'ChooseOnMapScreen':(context) => ChooseOnMap(),
+        'MapScreen': (context) => MapScreen(),
+        'PlacesScreen': (context) => PlacesScreen(),
+        'AddNewPlaceScreen': (context) => AddNewPlaceScreen(),
+        'ChooseOnMapScreen': (context) => ChooseOnMap(),
       },
     );
   }
 }
-

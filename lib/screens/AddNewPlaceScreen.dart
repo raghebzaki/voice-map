@@ -24,13 +24,12 @@ class _AddNewPlaceScreenState extends State<AddNewPlaceScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var height= MediaQuery.of(context).size.height;
+    // var height= MediaQuery.of(context).size.height;
     var width= MediaQuery.of(context).size.width;
     return Scaffold(
       drawer: MyDrawer(),
@@ -43,7 +42,6 @@ class _AddNewPlaceScreenState extends State<AddNewPlaceScreen> {
             children: [
               Container(
                 margin: EdgeInsets.all(10.0),
-                //height: height*.2,
                 child: TextField(
                   onChanged: (value){
                     setState(() {
@@ -66,13 +64,7 @@ class _AddNewPlaceScreenState extends State<AddNewPlaceScreen> {
               SizedBox(height: 5,),
               Container(
                 margin: EdgeInsets.all(10.0),
-                //height: height*.2,
                 child: TextField(
-                  onChanged: (value){
-                    setState(() {
-                      userlat = double.parse(value);
-                    });
-                  },
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -89,13 +81,7 @@ class _AddNewPlaceScreenState extends State<AddNewPlaceScreen> {
 
               Container(
                 margin: EdgeInsets.all(10.0),
-                //height: height*.2,
                 child: TextField(
-                  onChanged: (value){
-                    setState(() {
-                      userlng = double.parse(value);
-                    });
-                  },
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -122,8 +108,8 @@ class _AddNewPlaceScreenState extends State<AddNewPlaceScreen> {
                     Expanded(
                       child: Container(
                         width: width*.5,
-                        child: RaisedButton.icon(
-                        color: Theme.of(context).primaryColor,
+                        child: ElevatedButton.icon(
+                        //color: Theme.of(context).primaryColor,
                         onPressed: (){_awaitReturnValue(context);},
                         icon: FaIcon(FontAwesomeIcons.mapMarker),
                         label: Text('map'),
@@ -138,10 +124,14 @@ class _AddNewPlaceScreenState extends State<AddNewPlaceScreen> {
             Container(
               margin: EdgeInsets.all(10),
               width: MediaQuery.of(context).size.width,
-              child: RaisedButton(
+              child: ElevatedButton(
                 child: Text('save'),
                 onPressed: () {
-                  var placeList = PlaceList(placeName: placeName,userlat: userlat,userlng: userlng);
+                  setState(() {
+                    userlat = double.parse(latController.text);
+                    userlng = double.parse(lngController.text);
+                  });
+                  var placeList = PlaceList(placeName: placeName,userLat: userlat,userLng: userlng);
                   myDatabase.insert(placeList);
                   Navigator.of(context).pushNamed('PlacesScreen');
                 },

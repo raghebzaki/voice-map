@@ -1,13 +1,13 @@
 
 class PlaceList {
 
-    int id ;
-    String placeName;
-    double userlat;
-    double userlng;
+  int id ;
+  String placeName;
+  double userLat;
+  double userLng;
 
 
-  PlaceList({this.id, this.placeName, this.userlat, this.userlng});
+  PlaceList({this.id, this.placeName, this.userLat, this.userLng});
 
   String table(){
     return 'places';
@@ -21,21 +21,26 @@ class PlaceList {
     return{
       'id' : this.id,
       'name' : this.placeName,
-      'lat' : this.userlat,
-      'lng' : this.userlng,
+      'Lat' : this.userLat,
+      'Lng' : this.userLng,
     };
   }
+
+  // PlaceList(dynamic obj){
+  //   id = obj['id'];
+  //   placeName = obj['name'];
+  //   userlat = obj['lat'];
+  //   userlng = obj['lng'];
+  // }
 
   String getname() {
     return this.placeName;
   }
 
-   PlaceList.fromMap(Map<String, dynamic> data){
-     id = data['id'];
-     placeName = data['name'];
-     userlat = data['lat'];
-     userlng = data['lng'];
-   }
-
-
+  PlaceList.fromMap(Map<String, dynamic> data){
+    id = data['id'];
+    placeName = data['name'];
+    userLat = data['Lat'];
+    userLng = data['Lng'];
+  }
 }
