@@ -125,17 +125,18 @@ class _MapScreenState extends State<MapScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.directions),
-        onPressed: () async {
+        onPressed: ()  {
           if(inputLang.text!=null)
             {
               destination();
-             await map.MapLauncher.showDirections(
-              mapType: map.MapType.google,
-              destination: map.Coords(destinationLatitude,destinationLongitude),
-              origin: map.Coords(originLatitude, originLongitude),
-              directionsMode: directionsMode
-          );
-        }
+              Future.delayed(Duration(seconds: 4), () async {
+                await map.MapLauncher.showDirections(
+                    mapType: map.MapType.google,
+                    destination: map.Coords(destinationLatitude,destinationLongitude),
+                origin: map.Coords(originLatitude, originLongitude),
+                directionsMode: directionsMode );
+              } );
+            }
         else {
           speak('اختر المكان اولا');
           }
