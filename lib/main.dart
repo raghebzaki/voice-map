@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/Database/MyDatabase.dart';
-import 'file:///C:/Users/raghebzaki/AndroidStudioProjects/flutter_map/lib/screens/MapScreen.dart';
 import 'package:flutter_map/screens/PlacesScreen.dart';
 import 'package:flutter_map/screens/AddNewPlaceScreen.dart';
 import 'screens/ChooseOnMapScreen.dart';
+import 'screens/MapScreen.dart';
 import 'widget/theme.dart';
 
 void main() async {

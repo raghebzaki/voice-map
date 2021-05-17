@@ -45,7 +45,7 @@ class _ChooseOnMapState extends State<ChooseOnMap> {
           ),
           Container(
             width: MediaQuery.of(context).size.width,
-            child: RaisedButton(
+            child: ElevatedButton(
               child: Text('save'),
               onPressed: () {
                 _sendDataBack(context);
